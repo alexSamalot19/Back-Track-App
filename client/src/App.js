@@ -1,11 +1,15 @@
+/* global gapi */
 import React, { Component } from "react";
 import Jumbotron from "./components/Jumbotron";
 import Nav from "./components/Nav";
 import Input from "./components/Input";
 import Button from "./components/Button";
 import API from "./utils/API";
+import moment from "moment";
 import { RecipeList, RecipeListItem } from "./components/RecipeList";
 import { Container, Row, Col } from "./components/Grid";
+import { GOOGLE_API_KEY, CALENDAR_ID } from "./config.js";
+// import { gapi } from "gapi-script";
 
 class App extends Component {
   state = {
@@ -22,12 +26,18 @@ class App extends Component {
     });
   };
 
+  componentDidMount = () => {
+    this.getEvents();
+  };
+
   handleCalendarSubmit = event => {
     // When the form is submitted, prevent its default behavior, get recipes update the recipes state
-    event.preventDefault();
-    API.getCalendarEvents(this.state.calendarSearch)
-      .then(res => this.setState({ calendar: res.events }))
-      .catch(err => console.log(err));
+    // event.preventDefault();
+    // API.getCalendarEvents(this.state.calendarSearch)
+    //   .then(res => this.setState({ calendar: res.events }))
+    //   .catch(err => console.log(err));
+
+    this.getEvents();
   };
 
   handleFormSubmit = event => {
@@ -102,6 +112,38 @@ class App extends Component {
         </Container>
       </div>
     );
+  }
+
+  getEvents() {
+    let that = this;
+    function start() {
+      console.log(GOOGLE_API_KEY);
+
+      gapi.client
+        .init({
+          apiKey: GOOGLE_API_KEY
+        })
+        .then(function() {
+          return gapi.client.request({
+            path: `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?maxResults=11&orderBy=updated&timeMin=${moment().toISOString()}&timeMax=${moment()
+              .endOf("day")
+              .toISOString()}`
+          });
+        })
+        .then(
+          response => {
+            let events = response.result.items;
+            console.log(events);
+            console.log(response);
+          },
+          function(reason) {
+            console.log(reason);
+          }
+        );
+    }
+
+    console.log(gapi);
+    window.gapi.load("client", start);
   }
 }
 

@@ -5,9 +5,9 @@ import axios from "axios";
 export default {
   getRecipes: function(query) {
     return axios.get("/api/recipes", { params: { q: query } });
-  },
-
-  getCalendarEvents: function(query) {
-    return axios.get("/api/CalendarEvent");
   }
+
+  // getCalendarEvents: function(query) {
+  //   return axios.get("/api/CalendarEvent");
+  // }
 };
