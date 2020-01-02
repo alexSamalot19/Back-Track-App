@@ -21,6 +21,8 @@ router.get("/weather", (req, res) => {
       console.log(
         `It's currently ${temperature}. It feels like ${apparentTemperature}.`
       );
+
+      res.json(response.data);
     })
 
     .catch(err => res.status(422).json(err));
