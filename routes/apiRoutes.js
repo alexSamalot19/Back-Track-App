@@ -8,6 +8,24 @@ router.get("/recipes", (req, res) => {
     .catch(err => res.status(422).json(err));
 });
 
+router.get("/weather", (req, res) => {
+  axios
+    .get(
+      "https://api.darksky.net/forecast/65ed3ddef608a447f48aebd7e82b1e28/37.8267,-122.4233"
+    )
+    // .then(({ data: { results } }) => res.json(results))
+    .then(response => {
+      const temperature = response.data.currently.temperature;
+      const apparentTemperature = response.data.currently.apparentTemperature;
+
+      console.log(
+        `It's currently ${temperature}. It feels like ${apparentTemperature}.`
+      );
+    })
+
+    .catch(err => res.status(422).json(err));
+});
+
 // router.get("/CalendarEvent", (req, res) => {
 //   gapi.client
 //     .init({
