@@ -1,19 +1,18 @@
 /* global gapi */
 import React, { Component } from "react";
-import Jumbotron from "./components/Jumbotron";
-import Nav from "./components/Nav";
-import Input from "./components/Input";
-import Button from "./components/Button";
-import API from "./utils/API";
+import Jumbotron from "../components/Jumbotron";
+import Nav from "../components/Nav";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import API from "../utils/API";
 import moment from "moment";
-import { RecipeList, RecipeListItem } from "./components/RecipeList";
+import { RecipeList, RecipeListItem } from "../components/RecipeList";
 // import { EventList, EventListItem } from "./components/Calendar";
-import { Container, Row, Col } from "./components/Grid";
-import { GOOGLE_API_KEY, CALENDAR_ID } from "./config.js";
-// import { gapi } from "gapi-script";
-import { Route, Switch } from "react-router-dom";
+import { Container, Row, Col } from "../components/Grid";
+import { GOOGLE_API_KEY, CALENDAR_ID } from "../config.js";
+import { Link } from "react-router-dom";
 
-class App extends Component {
+class Home extends Component {
   state = {
     weather: [],
     recipes: [],
@@ -39,10 +38,6 @@ class App extends Component {
   };
 
   handleCalendarSubmit = event => {
-    this.getEvents();
-  };
-
-  handleMakeTopic = event => {
     this.getEvents();
   };
 
@@ -111,13 +106,11 @@ class App extends Component {
           Calendar
         </Button>
 
-        <Button
-          onClick={this.handleMakeTopic}
-          type="success"
-          className="input-lg"
-        >
-          Make Topic
-        </Button>
+        <Link to={"./MakeTopic"}>
+          <Button type="success" className="input-lg">
+            Make Topic
+          </Button>
+        </Link>
 
         <Button
           onClick={this.handleWeatherSubmit}
@@ -246,4 +239,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Home;
