@@ -100,82 +100,38 @@ class Home extends Component {
         <Jumbotron />
         <Button
           onClick={this.handleCalendarSubmit}
-          type="success"
+          type="dark"
           className="input-lg"
         >
-          Calendar
+          Refresh Calendar
         </Button>
 
         <Link to={"./MakeTopic"}>
-          <Button type="success" className="input-lg">
+          <Button type="dark" className="input-lg">
             Make Topic
           </Button>
         </Link>
 
-        <Button
+        {/* <Button
           onClick={this.handleWeatherSubmit}
-          type="success"
+          type="dark"
           className="input-lg"
         >
           Get Weather
-        </Button>
+        </Button> */}
 
         <Container>
-          <Row>
-            <Col size="md-12">
-              <form>
-                <Container>
-                  <Row>
-                    <Col size="xs-9 sm-10">
-                      <Input
-                        name="recipeSearch"
-                        value={this.state.recipeSearch}
-                        onChange={this.handleInputChange}
-                        placeholder="Search For a Recipe"
-                      />
-                    </Col>
-                    <Col size="xs-3 sm-2">
-                      <Button
-                        onClick={this.handleFormSubmit}
-                        type="success"
-                        className="input-lg"
-                      >
-                        Search
-                      </Button>
-                    </Col>
-                  </Row>
-                </Container>
-              </form>
-            </Col>
-          </Row>
           <Row>
             <Col size="xs-12">
               <div className="upcoming-meetings">
                 <div className="current-time">{time}, 2018</div>
-                <h1>Upcoming Meetings</h1>
+                <h1>All Events</h1>
                 <div className="list-group">
                   {/* {this.state.isLoading && loadingState} */}
                   {events.length > 0 && eventsList}
                   {/* {this.state.isEmpty && emptyState} */}
                 </div>
               </div>
-              {!this.state.recipes.length ? (
-                <h1 className="text-center">No Recipes to Display</h1>
-              ) : (
-                <RecipeList>
-                  {this.state.recipes.map(recipe => {
-                    return (
-                      <RecipeListItem
-                        key={recipe.title}
-                        title={recipe.title}
-                        href={recipe.href}
-                        ingredients={recipe.ingredients}
-                        thumbnail={recipe.thumbnail}
-                      />
-                    );
-                  })}
-                </RecipeList>
-              )}
             </Col>
           </Row>
         </Container>

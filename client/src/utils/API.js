@@ -7,6 +7,10 @@ export default {
     return axios.get("/api/weather");
   },
 
+  getStudent: function() {
+    return axios.get("/api/students");
+  },
+
   getRecipes: function(query) {
     return axios.get("/api/recipes", { params: { q: query } });
   }
