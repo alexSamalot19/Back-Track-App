@@ -11,6 +11,10 @@ export default {
     return axios.get("/api/students");
   },
 
+  getTopic: function() {
+    return axios.get("/api/topics");
+  },
+
   getRecipes: function(query) {
     return axios.get("/api/recipes", { params: { q: query } });
   }

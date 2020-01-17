@@ -16,10 +16,29 @@ const studentSeed = [
   }
 ];
 
+const topicSeed = [
+  {
+    name: "Marathon",
+    user: "Bob Seed",
+    hours: 1
+  }
+];
+// debugger;
 db.Student.remove({})
   .then(() => db.Student.collection.insertMany(studentSeed))
   .then(data => {
-    console.log(data.result.n + " records inserted!");
+    console.log(data.result.n + " students inserted!");
+    // process.exit(0);
+  })
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
+
+db.Topic.remove({})
+  .then(() => db.Topic.collection.insertMany(topicSeed))
+  .then(data => {
+    console.log(data.result.n + " topics inserted!");
     process.exit(0);
   })
   .catch(err => {

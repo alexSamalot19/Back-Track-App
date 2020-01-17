@@ -1,18 +1,18 @@
 const router = require("express").Router();
-const studentsController = require("../../controllers/studentController");
+const topicsController = require("../../controllers/topicController");
 
 // Matches with "/api/students"
 router
   .route("/")
-  .get(studentsController.findAll)
-  .post(studentsController.create);
+  .get(topicsController.findAll)
+  .post(topicsController.create);
 
 // Matches with "/api/students/:id"
 router
   .route("/:id")
-  .get(studentsController.findById)
-  .put(studentsController.update)
-  .delete(studentsController.remove);
+  .get(topicsController.findById)
+  .put(topicsController.update)
+  .delete(topicsController.remove);
 
 //Gets external api call
 router.get("/recipes", (req, res) => {

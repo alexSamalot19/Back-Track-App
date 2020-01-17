@@ -2,59 +2,41 @@ import React, { Component } from "react";
 import "../App.css";
 import Container from "../components/Container";
 import Footer from "../components/Footer";
-// import { render } from "@testing-library/react";
-// import { getAllStudents } from "./client.js";
 import { Table, Avatar, Spin, Icon, Modal } from "antd";
-import AddStudentForm from "../components/AddStudentForm";
+import AddTopicForm from "../components/AddTopicForm";
 import API from "../utils/API";
 
 class MakeTopic extends Component {
   state = {
-    students: [],
+    topics: [],
     isFetching: false,
-    isAddStudentModalVisible: false
+    isAddTopicModalVisible: false
   };
 
   componentDidMount() {
-    this.fetchStudents();
+    this.fetchTopics();
   }
 
-  // componentDidMount() {
-  //   API.getStudent(this.props.match.params.id).then(res =>
-  //     res.json().then(students => {
-  //       console.log(students);
-  //       this.setState({
-  //         students,
-  //         isFetching: false
-  //       });
-  //     })
-  //   );
-  // }
+  openAddTopicModal = () => this.setState({ isAddTopicModalVisible: true });
+  closeAddTopicModal = () => this.setState({ isAddTopicModalVisible: false });
 
-  openAddStudentModal = () => this.setState({ isAddStudentModalVisible: true });
-  closeAddStudentModal = () =>
-    this.setState({ isAddStudentModalVisible: false });
-
-  fetchStudents = () => {
+  fetchTopics = () => {
     this.setState({
       isFetching: false
     });
-    API.getStudent().then(res =>
-      res
-        .json()
-        .then(res =>
-          this.setState({
-            students: res.data,
-            isFetching: false,
-            isAddStudentModalVisible: false
-          })
-        )
-        .catch(err => console.log(err))
-    );
+    API.getTopic()
+      .then(res =>
+        this.setState({
+          topics: res.data,
+          isFetching: false,
+          isAddTopicModalVisible: false
+        })
+      )
+      .catch(err => console.log(err));
   };
 
   render() {
-    const { students, isFetching, isAddStudentModalVisible } = this.state;
+    const { topics, isFetching, isAddTopicModalVisible } = this.state;
 
     if (isFetching) {
       return (
@@ -64,43 +46,36 @@ class MakeTopic extends Component {
       );
     }
 
-    if (students && students.length) {
+    if (topics && topics.length) {
       const columns = [
         {
           title: "",
           dataIndex: "avatar",
-          render: (text, student) => (
+          render: (text, topics) => (
             <Avatar size="large">
-              {`${student.firstName
-                .charAt(0)
-                .toUpperCase()}${student.lastName.charAt(0).toUpperCase()}`}
+              {`${topics.name.charAt(0).toUpperCase()}`}
             </Avatar>
           )
         },
         {
-          title: "Student Id",
-          dataIndex: "studentId",
-          key: "studentId"
+          name: "Topic ID",
+          dataIndex: "topicId",
+          key: "topicId"
         },
         {
-          title: "First Name",
-          dataIndex: "firstName",
-          key: "firstName"
+          title: "Topic Name",
+          dataIndex: "name",
+          key: "name"
         },
         {
-          title: "Last Name",
-          dataIndex: "lastName",
-          key: "lastName"
+          title: "User",
+          dataIndex: "user",
+          key: "user"
         },
         {
-          title: "Email",
-          dataIndex: "email",
-          key: "email"
-        },
-        {
-          title: "Gender",
-          dataIndex: "gender",
-          key: "gender"
+          title: "Hours Scheduled",
+          dataIndex: "hours",
+          key: "hours"
         }
       ];
 
@@ -108,29 +83,29 @@ class MakeTopic extends Component {
         <Container>
           <Table
             style={{ marginBottom: "100px" }}
-            dataSource={students}
+            dataSource={topics}
             columns={columns}
             pagination={false}
-            rowKey="studentID"
+            rowKey="topicID"
           />
           <Modal
-            title="Add new student"
-            visible={isAddStudentModalVisible}
-            onOk={this.closeAddStudentModal}
-            onCancel={this.closeAddStudentModal}
+            title="Add new topic"
+            visible={isAddTopicModalVisible}
+            onOk={this.closeAddTopicModal}
+            onCancel={this.closeAddTopicModal}
             width={1000}
           >
-            <AddStudentForm />
+            <AddTopicForm />
           </Modal>
           <Footer
-            handleAddStudentClickEvent={this.openAddStudentModal}
-            numberOfStudents={students.length}
+            handleAddTopicClickEvent={this.openAddTopicModal}
+            numberOfTopics={topics.length}
           ></Footer>
         </Container>
       );
     }
 
-    return <h1>No Student Found</h1>;
+    return <h1>No Topic Found</h1>;
   }
 }
 
