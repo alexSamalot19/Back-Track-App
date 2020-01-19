@@ -15,6 +15,11 @@ export default {
     return axios.get("/api/topics");
   },
 
+  // Saves a topic to the database
+  saveTopic: function(topic) {
+    return axios.post("/api/topics", topic);
+  },
+
   getRecipes: function(query) {
     return axios.get("/api/recipes", { params: { q: query } });
   }

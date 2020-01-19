@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
 import { Input, Button, Tag } from "antd";
+import API from "../../utils/API";
 
 const inputBottomMargin = { marginBottom: "5px" };
 const tagStyle = {
@@ -29,7 +30,13 @@ class AddTopicForm extends Component {
         }}
         onSubmit={(topic, { setSubmitting }) => {
           alert(JSON.stringify(topic));
-          // Do dtudent then add
+          API.saveTopic({
+            name: topic.name,
+            user: topic.user,
+            hours: topic.hours
+          })
+            // .then(res => this.loadBooks())
+            .catch(err => console.log(err));
         }}
       >
         {({

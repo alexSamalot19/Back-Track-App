@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../App.css";
 import Container from "../components/Container";
-import Footer from "../components/Footer";
+import TopicFooter from "../components/TopicFooter";
 import { Table, Avatar, Spin, Icon, Modal } from "antd";
 import AddTopicForm from "../components/AddTopicForm";
 import API from "../utils/API";
@@ -97,10 +97,10 @@ class MakeTopic extends Component {
           >
             <AddTopicForm />
           </Modal>
-          <Footer
+          <TopicFooter
             handleAddTopicClickEvent={this.openAddTopicModal}
             numberOfTopics={topics.length}
-          ></Footer>
+          ></TopicFooter>
         </Container>
       );
     }
