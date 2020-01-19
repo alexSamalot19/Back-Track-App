@@ -95,7 +95,7 @@ class MakeTopic extends Component {
             onCancel={this.closeAddTopicModal}
             width={1000}
           >
-            <AddTopicForm />
+            <AddTopicForm handleReload={this.fetchTopics.bind(this)} />
           </Modal>
           <TopicFooter
             handleAddTopicClickEvent={this.openAddTopicModal}
