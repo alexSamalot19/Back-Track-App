@@ -20,6 +20,11 @@ export default {
     return axios.post("/api/topics", topic);
   },
 
+  // Saves a topic to the database
+  saveStudent: function(student) {
+    return axios.post("/api/students", student);
+  },
+
   getRecipes: function(query) {
     return axios.get("/api/recipes", { params: { q: query } });
   }

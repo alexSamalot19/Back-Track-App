@@ -3,7 +3,7 @@ import Container from "../Container";
 import { Button, Avatar } from "antd";
 import "./Footer.css";
 
-const Footer = props => (
+const StudentFooter = props => (
   <div className="footer">
     <Container>
       {props.numberOfStudents ? (
@@ -21,4 +21,4 @@ const Footer = props => (
   </div>
 );
 
-export default Footer;
+export default StudentFooter;

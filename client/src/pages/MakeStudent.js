@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import "../App.css";
 import Container from "../components/Container";
-import Footer from "../components/Footer";
-// import { render } from "@testing-library/react";
-// import { getAllStudents } from "./client.js";
+import StudentFooter from "../components/StudentFooter";
 import { Table, Avatar, Spin, Icon, Modal } from "antd";
 import AddStudentForm from "../components/AddStudentForm";
 import API from "../utils/API";
@@ -18,18 +16,6 @@ class MakeStudent extends Component {
   componentDidMount() {
     this.fetchStudents();
   }
-
-  // componentDidMount() {
-  //   API.getStudent(this.props.match.params.id).then(res =>
-  //     res.json().then(students => {
-  //       console.log(students);
-  //       this.setState({
-  //         students,
-  //         isFetching: false
-  //       });
-  //     })
-  //   );
-  // }
 
   openAddStudentModal = () => this.setState({ isAddStudentModalVisible: true });
   closeAddStudentModal = () =>
@@ -117,12 +103,12 @@ class MakeStudent extends Component {
             onCancel={this.closeAddStudentModal}
             width={1000}
           >
-            <AddStudentForm />
+            <AddStudentForm handleReload={this.fetchStudents.bind(this)} />
           </Modal>
-          <Footer
+          <StudentFooter
             handleAddStudentClickEvent={this.openAddStudentModal}
             numberOfStudents={students.length}
-          ></Footer>
+          ></StudentFooter>
         </Container>
       );
     }
