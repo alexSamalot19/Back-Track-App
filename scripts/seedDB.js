@@ -12,7 +12,7 @@ const studentSeed = [
     first_name: "Bob",
     last_name: "Seed",
     email: "bobSeed@gmail.com",
-    gender: "MALE"
+    topics: ["Marathon", "Community Garden"]
   }
 ];
 

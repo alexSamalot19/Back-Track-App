@@ -10,6 +10,10 @@ export default {
   getStudent: function() {
     return axios.get("/api/students");
   },
+  // Gets the book with the given id
+  getAStudent: function(id) {
+    return axios.get("/api/students/" + id);
+  },
 
   getTopic: function() {
     return axios.get("/api/topics");

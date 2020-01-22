@@ -13,10 +13,10 @@ import { GOOGLE_API_KEY, CALENDAR_ID } from "../config.js";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../components/List";
 
-class Home extends Component {
+class User extends Component {
   state = {
     weather: [],
-    students: [],
+    student: [],
     recipeSearch: "",
     time: moment().format("dd, Do MMMM, h:mm A"),
     events: [],
@@ -58,14 +58,15 @@ class Home extends Component {
     this.setState({
       isFetching: false
     });
-    API.getStudent()
+    API.getAStudent(this.props.match.params.id)
       .then(res =>
         this.setState({
-          students: res.data,
+          student: res.data,
           isFetching: false
         })
       )
       .catch(err => console.log(err));
+    console.log(this.props.match.params.id);
   };
 
   handleWeatherSubmit = event => {
@@ -160,22 +161,9 @@ class Home extends Component {
 
         <Container>
           <Row>
-            {this.state.students.length ? (
-              <List>
-                {this.state.students.map(students => (
-                  <ListItem key={students._id}>
-                    <Link to={"/students/" + students._id} id={students._id}>
-                      <strong>
-                        {students.first_name} {students.topics}
-                      </strong>
-                    </Link>
-                    {/* <DeleteBtn onClick={() => this.deleteBook(students._id)} /> */}
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              <h3>No Results to Display</h3>
-            )}
+            <strong>
+              {this.state.student.first_name} {this.state.student.topics}
+            </strong>
           </Row>
         </Container>
       </div>
@@ -238,4 +226,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default User;

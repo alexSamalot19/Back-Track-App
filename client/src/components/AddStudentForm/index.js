@@ -12,7 +12,7 @@ const tagStyle = {
 
 const AddStudentForm = props => (
   <Formik
-    initialValues={{ firstName: "", lastName: "", email: "", gender: "" }}
+    initialValues={{ firstName: "", lastName: "", email: "", topics: [] }}
     validate={values => {
       const errors = {};
 
@@ -34,12 +34,8 @@ const AddStudentForm = props => (
         errors.email = "Invalid email address";
       }
 
-      if (!values.gender) {
-        errors.gender = "Gender is Required";
-      } else if (
-        !["MALE", "male", "FEMALE", "female"].includes(values.gender)
-      ) {
-        errors.gender = "Gender must be: MALE, male, FEMALE or female";
+      if (!values.topics) {
+        errors.topics = "Topics are Required";
       }
     }}
     onSubmit={(student, { setSubmitting }) => {
@@ -48,7 +44,7 @@ const AddStudentForm = props => (
         first_name: student.firstName,
         last_name: student.lastName,
         email: student.email,
-        gender: student.gender
+        topics: student.topics
       })
         .then(res => props.handleReload())
         .catch(err => console.log(err));
@@ -103,14 +99,14 @@ const AddStudentForm = props => (
         )}
         <Input
           style={inputBottomMargin}
-          name="gender"
+          name="topics"
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.gender}
-          placeholder="Gender. E.g. MALE"
+          value={values.topics}
+          placeholder="Topics E.g. Marathon"
         />
-        {errors.gender && touched.gender && (
-          <Tag style={tagStyle}>{errors.gender}</Tag>
+        {errors.topics && touched.topics && (
+          <Tag style={tagStyle}>{errors.topics}</Tag>
         )}
         <Button
           onClick={() => submitForm()}

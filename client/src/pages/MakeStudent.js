@@ -81,9 +81,9 @@ class MakeStudent extends Component {
           key: "email"
         },
         {
-          title: "Gender",
-          dataIndex: "gender",
-          key: "gender"
+          title: "Topics",
+          dataIndex: "topics",
+          key: "topics"
         }
       ];
 
