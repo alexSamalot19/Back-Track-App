@@ -12,6 +12,7 @@ import { Container, Row, Col } from "../components/Grid";
 import { GOOGLE_API_KEY, CALENDAR_ID } from "../config.js";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../components/List";
+import LeaderChart from "../components/LeaderChart";
 
 class User extends Component {
   state = {
@@ -147,7 +148,7 @@ class User extends Component {
           <Row>
             <Col size="xs-12">
               <div className="upcoming-meetings">
-                <div className="current-time">{time}, 2018</div>
+                <div className="current-time">{time}, 2020</div>
                 <h1>All Events</h1>
                 <div className="list-group">
                   {/* {this.state.isLoading && loadingState} */}
@@ -164,6 +165,16 @@ class User extends Component {
             <strong>
               {this.state.student.first_name} {this.state.student.topics}
             </strong>
+            <br />
+            <br />
+            <br />
+            <br />
+            <LeaderChart />
+
+            <br />
+            <br />
+            <br />
+            <br />
           </Row>
         </Container>
       </div>

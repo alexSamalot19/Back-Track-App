@@ -146,7 +146,7 @@ class Home extends Component {
           <Row>
             <Col size="xs-12">
               <div className="upcoming-meetings">
-                <div className="current-time">{time}, 2018</div>
+                <div className="current-time">{time}, 2020</div>
                 <h1>All Events</h1>
                 <div className="list-group">
                   {/* {this.state.isLoading && loadingState} */}
