@@ -13,6 +13,8 @@ import { GOOGLE_API_KEY, CALENDAR_ID } from "../config.js";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../components/List";
 import LeaderChart from "../components/LeaderChart";
+import UserTopicForm from "../components/UserTopicForm";
+import { Table, Avatar, Spin, Icon, Modal } from "antd";
 
 class User extends Component {
   state = {
@@ -24,7 +26,10 @@ class User extends Component {
     isBusy: false,
     isEmpty: false,
     showLeader: false,
-    isLoading: true
+    showCalendar: false,
+    isLoading: true,
+    isAddTopicModalVisible: false,
+    hasStudent: false
   };
 
   handleInputChange = event => {
@@ -41,13 +46,25 @@ class User extends Component {
     this.fetchStudents();
   };
 
+  openAddTopicModal = () => this.setState({ isAddTopicModalVisible: true });
+  closeAddTopicModal = () => this.setState({ isAddTopicModalVisible: false });
+
   handleCalendarSubmit = event => {
     this.getEvents();
+    this.setState({
+      showCalendar: !this.state.showCalendar
+    });
   };
 
   handleLeaderboard = event => {
     this.setState({
       showLeader: !this.state.showLeader
+    });
+  };
+
+  handleTopicModal = event => {
+    this.setState({
+      isAddTopicModalVisible: !this.state.isAddTopicModalVisible
     });
   };
 
@@ -70,7 +87,8 @@ class User extends Component {
       .then(res =>
         this.setState({
           student: res.data,
-          isFetching: false
+          isFetching: false,
+          hasStudent: true
         })
       )
       .catch(err => console.log(err));
@@ -96,39 +114,42 @@ class User extends Component {
   };
 
   render() {
-    // const { topics } = this.state.student;
-    // const userTopics = topics;
-    // console.log(userTopics);
-    // // let topicsList = topics.map(function(topic) {
-    // //   return <span className="badge">{topic}</span>;
-    // // });
+    const {
+      hasStudent,
+      showCalendar,
+      showLeader,
+      time,
+      events,
+      isAddTopicModalVisible,
+      student
+    } = this.state;
 
-    const { showLeader, time, events, student } = this.state;
-    let nameFilter = student.first_name;
-    // let nameFilterSize = student.first_name.length();
-    console.log(nameFilter);
     let eventsList = events.map(function(event) {
-      console.log(event.summary.substring(0, 3));
-      let eventUser = event.summary.substring(0, 3);
-      if (eventUser === nameFilter) {
-        return (
-          <a
-            className="list-group-item"
-            href={event.htmlLink}
-            target="_blank"
-            key={event.id}
-          >
-            {event.summary}{" "}
-            <span className="badge">
-              {moment(event.start.dateTime).format("h:mm a")},{" "}
-              {moment(event.end.dateTime).diff(
-                moment(event.start.dateTime),
-                "minutes"
-              )}{" "}
-              minutes, {moment(event.start.dateTime).format("MMMM Do")}{" "}
-            </span>
-          </a>
-        );
+      if (hasStudent) {
+        let nameFilter = student.first_name;
+
+        console.log(event.summary.substring(0, nameFilter.length));
+        let eventUser = event.summary.substring(0, nameFilter.length);
+        if (showCalendar && eventUser === nameFilter) {
+          return (
+            <a
+              className="list-group-item"
+              href={event.htmlLink}
+              target="_blank"
+              key={event.id}
+            >
+              {event.summary}{" "}
+              <span className="badge">
+                {moment(event.start.dateTime).format("h:mm a")},{" "}
+                {moment(event.end.dateTime).diff(
+                  moment(event.start.dateTime),
+                  "minutes"
+                )}{" "}
+                minutes, {moment(event.start.dateTime).format("MMMM Do")}{" "}
+              </span>
+            </a>
+          );
+        }
       }
     });
 
@@ -141,7 +162,7 @@ class User extends Component {
           type="dark"
           className="input-lg"
         >
-          Refresh Calendar
+          Your Events
         </Button>
 
         <Button
@@ -152,6 +173,22 @@ class User extends Component {
           Leaderboard
         </Button>
 
+        <Button
+          onClick={this.handleTopicModal}
+          type="dark"
+          className="input-lg"
+        >
+          Log Hours
+        </Button>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://calendar.google.com/calendar/r/week?tab=mc&pli=1"
+        >
+          <Button type="dark" className="input-lg">
+            Calendar
+          </Button>
+        </a>
         <Button
           onClick={this.handleWeatherSubmit}
           type="dark"
@@ -165,19 +202,31 @@ class User extends Component {
             <Col size="xs-12">
               <div className="upcoming-meetings">
                 <div className="current-time">{time}, 2020</div>
-                <h1>Your Events</h1>
                 <div className="list-group">
                   {/* {this.state.isLoading && loadingState} */}
-                  {events.length > 0 && eventsList}
+                  {showCalendar && events.length > 0 && eventsList}
                   {/* {this.state.isEmpty && emptyState} */}
                 </div>
               </div>
             </Col>
           </Row>
+
+          <Row>
+            <LeaderChart showState={showLeader} />
+            <Modal
+              title="Add new topic"
+              visible={isAddTopicModalVisible}
+              onOk={this.closeAddTopicModal}
+              onCancel={this.closeAddTopicModal}
+              width={1000}
+            >
+              <UserTopicForm />
+            </Modal>
+          </Row>
         </Container>
-        <Row>
-          <LeaderChart showState={showLeader} />
-        </Row>
+        <br></br>
+        <br></br>
+        <h1>Bottom of page</h1>
       </div>
     );
   }
