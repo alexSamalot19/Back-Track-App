@@ -21,6 +21,16 @@ const topicSeed = [
     name: "Marathon",
     user: "Bob Seed",
     hours: 1
+  },
+  {
+    name: "Marathon",
+    user: "Jeff Seed",
+    hours: 2
+  },
+  {
+    name: "Marathon",
+    user: "George Seed",
+    hours: 3
   }
 ];
 // debugger;

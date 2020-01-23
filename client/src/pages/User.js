@@ -145,6 +145,14 @@ class User extends Component {
           Leaderboard (Weather)
         </Button>
 
+        <Button
+          onClick={this.handleWeatherSubmit}
+          type="dark"
+          className="input-lg"
+        >
+          Refresh Weather
+        </Button>
+
         <Container>
           <Row>
             <Col size="xs-12">
@@ -158,6 +166,9 @@ class User extends Component {
                 </div>
               </div>
             </Col>
+          </Row>
+          <Row>
+            <LeaderChart />
           </Row>
         </Container>
       </div>
