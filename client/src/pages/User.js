@@ -89,27 +89,40 @@ class User extends Component {
   };
 
   render() {
-    const { time, events } = this.state;
+    // const { topics } = this.state.student;
+    // const userTopics = topics;
+    // console.log(userTopics);
+    // // let topicsList = topics.map(function(topic) {
+    // //   return <span className="badge">{topic}</span>;
+    // // });
 
+    const { time, events, student } = this.state;
+    let nameFilter = student.first_name;
+    // let nameFilterSize = student.first_name.length();
+    console.log(nameFilter);
     let eventsList = events.map(function(event) {
-      return (
-        <a
-          className="list-group-item"
-          href={event.htmlLink}
-          target="_blank"
-          key={event.id}
-        >
-          {event.summary}{" "}
-          <span className="badge">
-            {moment(event.start.dateTime).format("h:mm a")},{" "}
-            {moment(event.end.dateTime).diff(
-              moment(event.start.dateTime),
-              "minutes"
-            )}{" "}
-            minutes, {moment(event.start.dateTime).format("MMMM Do")}{" "}
-          </span>
-        </a>
-      );
+      console.log(event.summary.substring(0, 3));
+      let eventUser = event.summary.substring(0, 3);
+      if (eventUser === nameFilter) {
+        return (
+          <a
+            className="list-group-item"
+            href={event.htmlLink}
+            target="_blank"
+            key={event.id}
+          >
+            {event.summary}{" "}
+            <span className="badge">
+              {moment(event.start.dateTime).format("h:mm a")},{" "}
+              {moment(event.end.dateTime).diff(
+                moment(event.start.dateTime),
+                "minutes"
+              )}{" "}
+              minutes, {moment(event.start.dateTime).format("MMMM Do")}{" "}
+            </span>
+          </a>
+        );
+      }
     });
 
     return (
@@ -124,32 +137,20 @@ class User extends Component {
           Refresh Calendar
         </Button>
 
-        <Link to={"./MakeTopic"}>
-          <Button type="dark" className="input-lg">
-            Make Topic
-          </Button>
-        </Link>
-
-        <Link to={"./MakeStudent"}>
-          <Button type="dark" className="input-lg">
-            Make Student
-          </Button>
-        </Link>
-
-        {/* <Button
+        <Button
           onClick={this.handleWeatherSubmit}
           type="dark"
           className="input-lg"
         >
-          Get Weather
-        </Button> */}
+          Leaderboard (Weather)
+        </Button>
 
         <Container>
           <Row>
             <Col size="xs-12">
               <div className="upcoming-meetings">
                 <div className="current-time">{time}, 2020</div>
-                <h1>All Events</h1>
+                <h1>Your Events</h1>
                 <div className="list-group">
                   {/* {this.state.isLoading && loadingState} */}
                   {events.length > 0 && eventsList}
@@ -157,24 +158,6 @@ class User extends Component {
                 </div>
               </div>
             </Col>
-          </Row>
-        </Container>
-
-        <Container>
-          <Row>
-            <strong>
-              {this.state.student.first_name} {this.state.student.topics}
-            </strong>
-            <br />
-            <br />
-            <br />
-            <br />
-            <LeaderChart />
-
-            <br />
-            <br />
-            <br />
-            <br />
           </Row>
         </Container>
       </div>
