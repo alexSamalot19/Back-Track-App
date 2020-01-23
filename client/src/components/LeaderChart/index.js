@@ -35,30 +35,30 @@ class LeaderChart extends Component {
 
   render() {
     const { hasData, topics, isFetchingData, chartData } = this.state;
-    if (hasData) {
-      console.log(topics[0].name);
-      console.log(topics[0].user);
-      console.log(topics[0].hours);
-
-      let barLabels = [topics[0].user, topics[1].user, topics[2].user];
+    if (hasData && this.props.showState) {
+      let barLabels = [];
       let barLabel = topics[0].name;
-      let barData = [topics[0].hours, topics[1].hours, topics[2].hours];
+      let barData = [];
 
       let barChart = {
         labels: barLabels,
         datasets: [{ label: barLabel, data: barData }]
       };
+
+      topics.forEach(chartTheData);
+
+      function chartTheData(item, index) {
+        barLabels[index] = item.user;
+        barData[index] = item.hours;
+      }
+
       return (
         <div className="chart">
           <Bar data={barChart} options={{ maintainAspectRatio: false }} />
         </div>
       );
     } else {
-      return (
-        <div className="chart">
-          <Bar data={chartData} options={{ maintainAspectRatio: false }} />
-        </div>
-      );
+      return <div></div>;
     }
 
     if (isFetchingData) {

@@ -23,6 +23,7 @@ class User extends Component {
     events: [],
     isBusy: false,
     isEmpty: false,
+    showLeader: false,
     isLoading: true
   };
 
@@ -42,6 +43,12 @@ class User extends Component {
 
   handleCalendarSubmit = event => {
     this.getEvents();
+  };
+
+  handleLeaderboard = event => {
+    this.setState({
+      showLeader: !this.state.showLeader
+    });
   };
 
   handleFormSubmit = event => {
@@ -96,7 +103,7 @@ class User extends Component {
     // //   return <span className="badge">{topic}</span>;
     // // });
 
-    const { time, events, student } = this.state;
+    const { showLeader, time, events, student } = this.state;
     let nameFilter = student.first_name;
     // let nameFilterSize = student.first_name.length();
     console.log(nameFilter);
@@ -138,11 +145,11 @@ class User extends Component {
         </Button>
 
         <Button
-          onClick={this.handleWeatherSubmit}
+          onClick={this.handleLeaderboard}
           type="dark"
           className="input-lg"
         >
-          Leaderboard (Weather)
+          Leaderboard
         </Button>
 
         <Button
@@ -167,10 +174,10 @@ class User extends Component {
               </div>
             </Col>
           </Row>
-          <Row>
-            <LeaderChart />
-          </Row>
         </Container>
+        <Row>
+          <LeaderChart showState={showLeader} />
+        </Row>
       </div>
     );
   }
