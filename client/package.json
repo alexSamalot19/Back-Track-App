@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://localhost:8012/",
   "dependencies": {
-    "antd": "^3.26.6",
+    "antd": "^3.26.7",
     "axios": "^0.18.0",
     "chart.js": "^2.9.3",
     "formik": "^2.1.1",

@@ -13,6 +13,8 @@ import { GOOGLE_API_KEY, CALENDAR_ID } from "../config.js";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../components/List";
 import LeaderChart from "../components/LeaderChart";
+import UserTopicForm from "../components/UserTopicForm";
+import { Table, Avatar, Spin, Icon, Modal } from "antd";
 
 class User extends Component {
   state = {
@@ -23,7 +25,11 @@ class User extends Component {
     events: [],
     isBusy: false,
     isEmpty: false,
-    isLoading: true
+    showLeader: false,
+    showCalendar: false,
+    isLoading: true,
+    isAddTopicModalVisible: false,
+    hasStudent: false
   };
 
   handleInputChange = event => {
@@ -40,8 +46,26 @@ class User extends Component {
     this.fetchStudents();
   };
 
+  openAddTopicModal = () => this.setState({ isAddTopicModalVisible: true });
+  closeAddTopicModal = () => this.setState({ isAddTopicModalVisible: false });
+
   handleCalendarSubmit = event => {
     this.getEvents();
+    this.setState({
+      showCalendar: !this.state.showCalendar
+    });
+  };
+
+  handleLeaderboard = event => {
+    this.setState({
+      showLeader: !this.state.showLeader
+    });
+  };
+
+  handleTopicModal = event => {
+    this.setState({
+      isAddTopicModalVisible: !this.state.isAddTopicModalVisible
+    });
   };
 
   handleFormSubmit = event => {
@@ -63,7 +87,8 @@ class User extends Component {
       .then(res =>
         this.setState({
           student: res.data,
-          isFetching: false
+          isFetching: false,
+          hasStudent: true
         })
       )
       .catch(err => console.log(err));
@@ -89,27 +114,43 @@ class User extends Component {
   };
 
   render() {
-    const { time, events } = this.state;
+    const {
+      hasStudent,
+      showCalendar,
+      showLeader,
+      time,
+      events,
+      isAddTopicModalVisible,
+      student
+    } = this.state;
 
     let eventsList = events.map(function(event) {
-      return (
-        <a
-          className="list-group-item"
-          href={event.htmlLink}
-          target="_blank"
-          key={event.id}
-        >
-          {event.summary}{" "}
-          <span className="badge">
-            {moment(event.start.dateTime).format("h:mm a")},{" "}
-            {moment(event.end.dateTime).diff(
-              moment(event.start.dateTime),
-              "minutes"
-            )}{" "}
-            minutes, {moment(event.start.dateTime).format("MMMM Do")}{" "}
-          </span>
-        </a>
-      );
+      if (hasStudent) {
+        let nameFilter = student.first_name;
+
+        console.log(event.summary.substring(0, nameFilter.length));
+        let eventUser = event.summary.substring(0, nameFilter.length);
+        if (showCalendar && eventUser === nameFilter) {
+          return (
+            <a
+              className="list-group-item"
+              href={event.htmlLink}
+              target="_blank"
+              key={event.id}
+            >
+              {event.summary}{" "}
+              <span className="badge">
+                {moment(event.start.dateTime).format("h:mm a")},{" "}
+                {moment(event.end.dateTime).diff(
+                  moment(event.start.dateTime),
+                  "minutes"
+                )}{" "}
+                minutes, {moment(event.start.dateTime).format("MMMM Do")}{" "}
+              </span>
+            </a>
+          );
+        }
+      }
     });
 
     return (
@@ -121,62 +162,71 @@ class User extends Component {
           type="dark"
           className="input-lg"
         >
-          Refresh Calendar
+          Your Events
         </Button>
 
-        <Link to={"./MakeTopic"}>
-          <Button type="dark" className="input-lg">
-            Make Topic
-          </Button>
-        </Link>
+        <Button
+          onClick={this.handleLeaderboard}
+          type="dark"
+          className="input-lg"
+        >
+          Leaderboard
+        </Button>
 
-        <Link to={"./MakeStudent"}>
+        <Button
+          onClick={this.handleTopicModal}
+          type="dark"
+          className="input-lg"
+        >
+          Log Hours
+        </Button>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://calendar.google.com/calendar/r/week?tab=mc&pli=1"
+        >
           <Button type="dark" className="input-lg">
-            Make Student
+            Calendar
           </Button>
-        </Link>
-
-        {/* <Button
+        </a>
+        <Button
           onClick={this.handleWeatherSubmit}
           type="dark"
           className="input-lg"
         >
-          Get Weather
-        </Button> */}
+          Refresh Weather
+        </Button>
 
         <Container>
           <Row>
             <Col size="xs-12">
               <div className="upcoming-meetings">
                 <div className="current-time">{time}, 2020</div>
-                <h1>All Events</h1>
                 <div className="list-group">
                   {/* {this.state.isLoading && loadingState} */}
-                  {events.length > 0 && eventsList}
+                  {showCalendar && events.length > 0 && eventsList}
                   {/* {this.state.isEmpty && emptyState} */}
                 </div>
               </div>
             </Col>
           </Row>
-        </Container>
 
-        <Container>
           <Row>
-            <strong>
-              {this.state.student.first_name} {this.state.student.topics}
-            </strong>
-            <br />
-            <br />
-            <br />
-            <br />
-            <LeaderChart />
-
-            <br />
-            <br />
-            <br />
-            <br />
+            <LeaderChart showState={showLeader} />
+            <Modal
+              title="Add new topic"
+              visible={isAddTopicModalVisible}
+              onOk={this.closeAddTopicModal}
+              onCancel={this.closeAddTopicModal}
+              width={1000}
+            >
+              <UserTopicForm />
+            </Modal>
           </Row>
         </Container>
+        <br></br>
+        <br></br>
+        <h1>Bottom of page</h1>
       </div>
     );
   }
