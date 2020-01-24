@@ -13,6 +13,18 @@ const studentSeed = [
     last_name: "Seed",
     email: "bobSeed@gmail.com",
     topics: ["Marathon", "Community Garden"]
+  },
+  {
+    first_name: "Jeff",
+    last_name: "Seed",
+    email: "jeffSeed@gmail.com",
+    topics: ["Marathon", "Community Garden", "Carpool"]
+  },
+  {
+    first_name: "George",
+    last_name: "Seed",
+    email: "georgeSeed@hotmail.com",
+    topics: ["Marathon", "Carpool"]
   }
 ];
 
@@ -31,6 +43,26 @@ const topicSeed = [
     name: "Marathon",
     user: "George Seed",
     hours: 3
+  },
+  {
+    name: "Community Garden",
+    user: "Bob Seed",
+    hours: 1
+  },
+  {
+    name: "Community Garden",
+    user: "Jeff Seed",
+    hours: 2
+  },
+  {
+    name: "Carpool",
+    user: "George Seed",
+    hours: 3
+  },
+  {
+    name: "Carpool",
+    user: "Jeff Seed",
+    hours: 2
   }
 ];
 // debugger;
