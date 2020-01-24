@@ -60,14 +60,6 @@ class LeaderChart extends Component {
     } else {
       return <div></div>;
     }
-
-    if (isFetchingData) {
-      return (
-        <Container>
-          <Spin />
-        </Container>
-      );
-    }
   }
 }
 

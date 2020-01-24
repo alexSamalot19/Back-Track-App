@@ -20,6 +20,7 @@ class User extends Component {
   state = {
     weather: [],
     student: [],
+    exampleTopics: ["E.g.: Volunteer", "E.g.: Chaperone"],
     recipeSearch: "",
     time: moment().format("dd, Do MMMM, h:mm A"),
     events: [],
@@ -119,10 +120,22 @@ class User extends Component {
       showCalendar,
       showLeader,
       time,
+      exampleTopics,
       events,
       isAddTopicModalVisible,
       student
     } = this.state;
+
+    let topicsList = exampleTopics.map(topic => {
+      return <li>{topic}</li>;
+    });
+
+    if (showLeader && hasStudent) {
+      let topicsList = student.topics.map(topic => {
+        return <li>{topic}</li>;
+        console.log("I tried");
+      });
+    }
 
     let eventsList = events.map(function(event) {
       if (hasStudent) {
@@ -210,7 +223,9 @@ class User extends Component {
               </div>
             </Col>
           </Row>
-
+          <Row>
+            <ul>{showLeader && topicsList}</ul>
+          </Row>
           <Row>
             <LeaderChart showState={showLeader} />
             <Modal
