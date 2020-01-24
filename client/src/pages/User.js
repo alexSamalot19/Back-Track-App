@@ -19,8 +19,9 @@ import { Table, Avatar, Spin, Icon, Modal } from "antd";
 class User extends Component {
   state = {
     weather: [],
-    student: [],
-    exampleTopics: ["E.g.: Volunteer", "E.g.: Chaperone"],
+    student: {
+      topics: ["E.g.: Volunteer", "E.g.: Chaperone"]
+    },
     recipeSearch: "",
     time: moment().format("dd, Do MMMM, h:mm A"),
     events: [],
@@ -120,22 +121,14 @@ class User extends Component {
       showCalendar,
       showLeader,
       time,
-      exampleTopics,
       events,
       isAddTopicModalVisible,
       student
     } = this.state;
 
-    let topicsList = exampleTopics.map(topic => {
-      return <li>{topic}</li>;
+    let topicsList = student.topics.map(topic => {
+      return <LeaderChart showState={showLeader} topicFilter={topic} />;
     });
-
-    if (showLeader && hasStudent) {
-      let topicsList = student.topics.map(topic => {
-        return <li>{topic}</li>;
-        console.log("I tried");
-      });
-    }
 
     let eventsList = events.map(function(event) {
       if (hasStudent) {
@@ -227,7 +220,7 @@ class User extends Component {
             <ul>{showLeader && topicsList}</ul>
           </Row>
           <Row>
-            <LeaderChart showState={showLeader} />
+            {/* <LeaderChart showState={showLeader} /> */}
             <Modal
               title="Add new topic"
               visible={isAddTopicModalVisible}

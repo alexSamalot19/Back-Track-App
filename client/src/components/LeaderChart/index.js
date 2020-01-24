@@ -37,8 +37,9 @@ class LeaderChart extends Component {
     const { hasData, topics, isFetchingData, chartData } = this.state;
     if (hasData && this.props.showState) {
       let barLabels = [];
-      let barLabel = topics[0].name;
+      let barLabel = this.props.topicFilter;
       let barData = [];
+      let i = 0;
 
       let barChart = {
         labels: barLabels,
@@ -48,8 +49,11 @@ class LeaderChart extends Component {
       topics.forEach(chartTheData);
 
       function chartTheData(item, index) {
-        barLabels[index] = item.user;
-        barData[index] = item.hours;
+        if (item.name === barLabel) {
+          barLabels[i] = item.user;
+          barData[i] = item.hours;
+          i++;
+        }
       }
 
       return (
