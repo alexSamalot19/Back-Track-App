@@ -12,6 +12,7 @@ import { Container, Row, Col } from "../components/Grid";
 import { GOOGLE_API_KEY, CALENDAR_ID } from "../config.js";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../components/List";
+import LeaderPieChart from "../components/LeaderPieChart";
 
 class Home extends Component {
   state = {
@@ -112,42 +113,15 @@ class Home extends Component {
 
     return (
       <div>
-        <Nav />
+        <Nav page={"home"} type="dark" />
         <Jumbotron />
-        <Button
-          onClick={this.handleCalendarSubmit}
-          type="dark"
-          className="input-lg"
-        >
-          Refresh Calendar
-        </Button>
-
-        <Link to={"./MakeTopic"}>
-          <Button type="dark" className="input-lg">
-            Make Topic
-          </Button>
-        </Link>
-
-        <Link to={"./MakeStudent"}>
-          <Button type="dark" className="input-lg">
-            Make Student
-          </Button>
-        </Link>
-
-        {/* <Button
-          onClick={this.handleWeatherSubmit}
-          type="dark"
-          className="input-lg"
-        >
-          Get Weather
-        </Button> */}
-
         <Container>
           <Row>
             <Col size="xs-12">
               <div className="upcoming-meetings">
-                <div className="current-time">{time}, 2020</div>
-                <h1>All Events</h1>
+                <div className="current-time">
+                  <h3>{time}, 2020 Events To Go!</h3>
+                </div>
                 <div className="list-group">
                   {/* {this.state.isLoading && loadingState} */}
                   {events.length > 0 && eventsList}
@@ -159,23 +133,29 @@ class Home extends Component {
         </Container>
 
         <Container>
+          <h3>Users</h3>
           <Row>
-            {this.state.students.length ? (
-              <List>
-                {this.state.students.map(students => (
-                  <ListItem key={students._id}>
-                    <Link to={"/students/" + students._id} id={students._id}>
-                      <strong>
-                        {students.first_name} {students.topics}
-                      </strong>
-                    </Link>
-                    {/* <DeleteBtn onClick={() => this.deleteBook(students._id)} /> */}
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              <h3>No Results to Display</h3>
-            )}
+            <Col size="xs-12">
+              {this.state.students.length ? (
+                <List>
+                  {this.state.students.map(students => (
+                    <ListItem key={students._id}>
+                      <Link to={"/students/" + students._id} id={students._id}>
+                        <strong>
+                          {students.first_name} {students.last_name}
+                        </strong>
+                      </Link>
+                      {/* <DeleteBtn onClick={() => this.deleteBook(students._id)} /> */}
+                    </ListItem>
+                  ))}
+                </List>
+              ) : (
+                <h3>No Ones Home!</h3>
+              )}
+            </Col>
+            <Col size="xs-12">
+              <LeaderPieChart />
+            </Col>
           </Row>
         </Container>
       </div>

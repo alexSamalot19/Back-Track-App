@@ -6,8 +6,6 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import API from "../utils/API";
 import moment from "moment";
-import { RecipeList, RecipeListItem } from "../components/RecipeList";
-// import { EventList, EventListItem } from "./components/Calendar";
 import { Container, Row, Col } from "../components/Grid";
 import { GOOGLE_API_KEY, CALENDAR_ID } from "../config.js";
 import { Link } from "react-router-dom";
@@ -18,9 +16,9 @@ import { Table, Avatar, Spin, Icon, Modal } from "antd";
 
 class User extends Component {
   state = {
-    weather: [],
-    student: [],
-    recipeSearch: "",
+    student: {
+      topics: ["E.g.: Volunteer", "E.g.: Chaperone"]
+    },
     time: moment().format("dd, Do MMMM, h:mm A"),
     events: [],
     isBusy: false,
@@ -68,17 +66,6 @@ class User extends Component {
     });
   };
 
-  handleFormSubmit = event => {
-    // When the form is submitted, prevent its default behavior, get recipes update the recipes state
-    event.preventDefault();
-    API.getRecipes(this.state.recipeSearch)
-      .then(res => {
-        this.setState({ recipes: res.data });
-        console.log(res);
-      })
-      .catch(err => console.log(err));
-  };
-
   fetchStudents = () => {
     this.setState({
       isFetching: false
@@ -95,24 +82,6 @@ class User extends Component {
     console.log(this.props.match.params.id);
   };
 
-  handleWeatherSubmit = event => {
-    // When the form is submitted, prevent its default behavior, get recipes update the recipes state
-    event.preventDefault();
-    API.getWeather()
-      .then(res => {
-        this.setState({ weather: res.data });
-        console.log("I tried");
-        console.log(res);
-      })
-      .catch(err => console.log(err));
-    console.log("new");
-    console.log(this.state.weather);
-
-    this.setState({ weather: "sun" });
-
-    console.log("cheating");
-  };
-
   render() {
     const {
       hasStudent,
@@ -123,6 +92,10 @@ class User extends Component {
       isAddTopicModalVisible,
       student
     } = this.state;
+
+    let topicsList = student.topics.map(topic => {
+      return <LeaderChart showState={showLeader} topicFilter={topic} />;
+    });
 
     let eventsList = events.map(function(event) {
       if (hasStudent) {
@@ -189,13 +162,6 @@ class User extends Component {
             Calendar
           </Button>
         </a>
-        <Button
-          onClick={this.handleWeatherSubmit}
-          type="dark"
-          className="input-lg"
-        >
-          Refresh Weather
-        </Button>
 
         <Container>
           <Row>
@@ -210,9 +176,11 @@ class User extends Component {
               </div>
             </Col>
           </Row>
-
           <Row>
-            <LeaderChart showState={showLeader} />
+            <ul>{showLeader && topicsList}</ul>
+          </Row>
+          <Row>
+            {/* <LeaderChart showState={showLeader} /> */}
             <Modal
               title="Add new topic"
               visible={isAddTopicModalVisible}
