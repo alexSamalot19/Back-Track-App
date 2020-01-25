@@ -27,7 +27,7 @@ const AddStudentForm = props => (
       }
 
       if (!values.email) {
-        errors.email = "Required";
+        errors.email = "Email Required";
       } else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
       ) {
@@ -37,13 +37,15 @@ const AddStudentForm = props => (
       if (!values.topics) {
         errors.topics = "Topics are Required";
       }
+
+      return errors;
     }}
-    onSubmit={(student, { setSubmitting }) => {
+    onSubmit={(values, { setSubmitting }) => {
       API.saveStudent({
-        first_name: student.firstName,
-        last_name: student.lastName,
-        email: student.email,
-        topics: student.topics.split(" ")
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        topics: values.topics.split(" ")
       })
         .then(res => props.handleReload())
         .catch(err => console.log(err));

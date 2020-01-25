@@ -2,6 +2,7 @@ import React from "react";
 import Container from "../Container";
 import { Button, Avatar } from "antd";
 import "./Footer.css";
+import { Link } from "react-router-dom";
 
 const StudentFooter = props => (
   <div className="footer">
@@ -14,9 +15,12 @@ const StudentFooter = props => (
           {props.numberOfStudents}
         </Avatar>
       ) : null}
-      <Button onClick={() => props.handleAddStudentClickEvent()} type="primary">
+      <Button onClick={() => props.handleAddStudentClickEvent()} type="dark">
         Add new Student +
       </Button>
+      <Link to={"../"}>
+        <Button type="dark">Home</Button>
+      </Link>
     </Container>
   </div>
 );

@@ -25,6 +25,7 @@ const AddTopicForm = props => (
       if (!values.hours) {
         errors.hours = "Hours are Required";
       }
+      return errors;
     }}
     onSubmit={(topic, { setSubmitting }) => {
       alert(JSON.stringify(topic));
