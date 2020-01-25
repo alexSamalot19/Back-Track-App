@@ -61,18 +61,13 @@ class MakeStudent extends Component {
           )
         },
         {
-          title: "Student Id",
-          dataIndex: "studentId",
-          key: "studentId"
-        },
-        {
           title: "First Name",
-          dataIndex: "firstName",
+          dataIndex: "first_name",
           key: "firstName"
         },
         {
           title: "Last Name",
-          dataIndex: "lastName",
+          dataIndex: "last_name",
           key: "lastName"
         },
         {

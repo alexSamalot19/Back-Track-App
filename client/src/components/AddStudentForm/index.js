@@ -39,12 +39,11 @@ const AddStudentForm = props => (
       }
     }}
     onSubmit={(student, { setSubmitting }) => {
-      alert(JSON.stringify(student));
       API.saveStudent({
         first_name: student.firstName,
         last_name: student.lastName,
         email: student.email,
-        topics: student.topics
+        topics: student.topics.split(" ")
       })
         .then(res => props.handleReload())
         .catch(err => console.log(err));
