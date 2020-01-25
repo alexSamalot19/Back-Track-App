@@ -7,7 +7,7 @@ class Nav extends Component {
   render() {
     if (this.props.page === "home") {
       return (
-        <nav className="navbar navbar-dark bg-dark" type="dark">
+        <nav className="navbar navbar-dark bg-dark back-track-nav" type="dark">
           <Link to={"./"}>
             <Button type="dark" className="input-lg">
               Home
