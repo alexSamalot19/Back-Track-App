@@ -113,7 +113,24 @@ class MakeStudent extends Component {
       );
     }
 
-    return <h1>No Student Found</h1>;
+    return (
+      <Container>
+        <h1>No Student Found</h1>{" "}
+        <Modal
+          title="Add new student"
+          visible={isAddStudentModalVisible}
+          onOk={this.closeAddStudentModal}
+          onCancel={this.closeAddStudentModal}
+          width={1000}
+        >
+          <AddStudentForm handleReload={this.fetchStudents.bind(this)} />
+        </Modal>
+        <StudentFooter
+          handleAddStudentClickEvent={this.openAddStudentModal}
+          numberOfStudents={students.length}
+        ></StudentFooter>
+      </Container>
+    );
   }
 }
 
