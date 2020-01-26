@@ -21,10 +21,13 @@ const UserTopicForm = props => (
       }
       if (!values.user) {
         errors.user = "User Name Required";
+      } else if (values.user !== this.props.userName) {
+        errors.user = "Please use the name at the top of the form";
       }
       if (!values.hours) {
         errors.hours = "Hours are Required";
       }
+      return errors;
     }}
     onSubmit={(topic, { setSubmitting }) => {
       alert(JSON.stringify(topic));

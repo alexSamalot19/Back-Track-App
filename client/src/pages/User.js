@@ -181,20 +181,30 @@ class User extends Component {
           </Row>
           <Row>
             {/* <LeaderChart showState={showLeader} /> */}
+
             <Modal
-              title="Add new topic"
+              title={
+                this.state.student.first_name +
+                " " +
+                this.state.student.last_name +
+                " Add Your Hours for the: " +
+                this.state.student.topics
+                  .toString()
+                  .split(/[,]+/)
+                  .join("/")
+              }
               visible={isAddTopicModalVisible}
               onOk={this.closeAddTopicModal}
               onCancel={this.closeAddTopicModal}
               width={1000}
             >
-              <UserTopicForm />
+              <UserTopicForm
+                userName={this.state.student.name}
+                userTopics={this.state.student.topics}
+              />
             </Modal>
           </Row>
         </Container>
-        <br></br>
-        <br></br>
-        <h1>Bottom of page</h1>
       </div>
     );
   }
