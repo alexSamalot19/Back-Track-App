@@ -20,6 +20,11 @@ export default {
     return axios.delete("/api/students/" + id);
   },
 
+  // Deletes the topic with the given id
+  deleteTopic: function(id) {
+    return axios.delete("/api/topics/" + id);
+  },
+
   getTopic: function() {
     return axios.get("/api/topics");
   },

@@ -35,6 +35,12 @@ class MakeTopic extends Component {
       .catch(err => console.log(err));
   };
 
+  deleteTopic = id => {
+    API.deleteTopic(id)
+      .then(res => this.fetchTopics())
+      .catch(err => console.log(err));
+  };
+
   render() {
     const { topics, isFetching, isAddTopicModalVisible } = this.state;
 
@@ -52,9 +58,17 @@ class MakeTopic extends Component {
           title: "",
           dataIndex: "avatar",
           render: (text, topics) => (
-            <Avatar size="large">
-              {`${topics.name.charAt(0).toUpperCase()}`}
-            </Avatar>
+            <div>
+              <Avatar size="large">
+                {`${topics.name.charAt(0).toUpperCase()}`}
+              </Avatar>
+              <button
+                id={topics.id}
+                onClick={() => this.deleteTopic(topics._id)}
+              >
+                Remove
+              </button>
+            </div>
           )
         },
         {

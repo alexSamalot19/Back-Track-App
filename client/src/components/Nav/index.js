@@ -13,6 +13,11 @@ class Nav extends Component {
               Home
             </Button>
           </Link>
+          <Link to={"./MakeTopic"}>
+            <Button type="dark" className="input-lg">
+              Edit Topics DB
+            </Button>
+          </Link>
           <Link to={"./MakeStudent"}>
             <Button type="dark" className="input-lg">
               New User
@@ -28,7 +33,11 @@ class Nav extends Component {
               Home
             </Button>
           </Link>
-
+          <Link to={"../MakeTopic"}>
+            <Button type="dark" className="input-lg">
+              Edit Topics DB
+            </Button>
+          </Link>
           <Link to={"../MakeStudent"}>
             <Button type="dark" className="input-lg">
               New User
