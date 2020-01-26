@@ -199,7 +199,11 @@ class User extends Component {
               width={1000}
             >
               <UserTopicForm
-                userName={this.state.student.name}
+                userName={
+                  this.state.student.first_name +
+                  " " +
+                  this.state.student.last_name
+                }
                 userTopics={this.state.student.topics}
               />
             </Modal>

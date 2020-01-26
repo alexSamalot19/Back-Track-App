@@ -12,28 +12,29 @@ const tagStyle = {
 
 const UserTopicForm = props => (
   <Formik
-    initialValues={{ name: "", user: "", hours: "" }}
+    initialValues={{ name: "", hours: "" }}
     validate={values => {
       const errors = {};
 
       if (!values.name) {
         errors.name = "Topic Name Required";
-      }
-      if (!values.user) {
-        errors.user = "User Name Required";
-      } else if (values.user !== this.props.userName) {
-        errors.user = "Please use the name at the top of the form";
+      } else if (props.userTopics.indexOf(values.name) === -1) {
+        errors.name = "Use an existing topic";
       }
       if (!values.hours) {
         errors.hours = "Hours are Required";
+      } else if (
+        !/^\d+$/.test(values.hours) &&
+        !/^\d+\.\d+$/.test(values.hours)
+      ) {
+        errors.hours = "Please enter a number";
       }
       return errors;
     }}
     onSubmit={(topic, { setSubmitting }) => {
-      alert(JSON.stringify(topic));
       API.saveTopic({
         name: topic.name,
-        user: topic.user,
+        user: props.userName,
         hours: topic.hours
       }).catch(err => console.log(err));
     }}
@@ -64,17 +65,6 @@ const UserTopicForm = props => (
         )}
         <Input
           style={inputBottomMargin}
-          name="user"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.user}
-          placeholder="User Name. E.g. John Smith"
-        />
-        {errors.lastName && touched.lastName && (
-          <Tag style={tagStyle}>{errors.lastName}</Tag>
-        )}
-        <Input
-          style={inputBottomMargin}
           name="hours"
           type="hours"
           onChange={handleChange}
@@ -83,7 +73,7 @@ const UserTopicForm = props => (
           placeholder="hours E.g. 3.5"
         />
         {errors.hours && touched.hours && (
-          <Tag style={tagStyle}>{errors.email}</Tag>
+          <Tag style={tagStyle}>{errors.hours}</Tag>
         )}
         <Button
           onClick={() => submitForm()}
