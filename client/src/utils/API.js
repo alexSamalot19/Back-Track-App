@@ -10,9 +10,14 @@ export default {
   getStudent: function() {
     return axios.get("/api/students");
   },
-  // Gets the book with the given id
+  // Gets the student with the given id
   getAStudent: function(id) {
     return axios.get("/api/students/" + id);
+  },
+
+  // Deletes the student with the given id
+  deleteStudent: function(id) {
+    return axios.delete("/api/students/" + id);
   },
 
   getTopic: function() {

@@ -36,6 +36,12 @@ class MakeStudent extends Component {
       .catch(err => console.log(err));
   };
 
+  deleteStudent = id => {
+    API.deleteStudent(id)
+      .then(res => this.fetchStudents())
+      .catch(err => console.log(err));
+  };
+
   render() {
     const { students, isFetching, isAddStudentModalVisible } = this.state;
 
@@ -53,11 +59,19 @@ class MakeStudent extends Component {
           title: "",
           dataIndex: "avatar",
           render: (text, students) => (
-            <Avatar size="large">
-              {`${students.first_name
-                .charAt(0)
-                .toUpperCase()}${students.last_name.charAt(0).toUpperCase()}`}
-            </Avatar>
+            <div>
+              <Avatar size="large">
+                {`${students.first_name
+                  .charAt(0)
+                  .toUpperCase()}${students.last_name.charAt(0).toUpperCase()}`}
+              </Avatar>
+              <button
+                id={students.id}
+                onClick={() => this.deleteStudent(students._id)}
+              >
+                Remove
+              </button>
+            </div>
           )
         },
         {
