@@ -120,7 +120,7 @@ class Home extends Component {
             <Col size="xs-12">
               <div className="upcoming-meetings">
                 <div className="current-time">
-                  <h3>{time}, 2020 Events To Go!</h3>
+                  <h3>{time}, 2020</h3>
                 </div>
                 <div className="list-group">
                   {/* {this.state.isLoading && loadingState} */}

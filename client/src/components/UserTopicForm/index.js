@@ -12,6 +12,7 @@ const tagStyle = {
 
 const UserTopicForm = props => (
   <Formik
+    enableReinitialize
     initialValues={{ name: "", hours: "" }}
     validate={values => {
       const errors = {};
@@ -31,12 +32,16 @@ const UserTopicForm = props => (
       }
       return errors;
     }}
-    onSubmit={(topic, { setSubmitting }) => {
+    onSubmit={(topic, { setSubmitting, resetForm }) => {
       API.saveTopic({
         name: topic.name,
         user: props.userName,
         hours: topic.hours
       }).catch(err => console.log(err));
+
+      resetForm();
+
+      setSubmitting(false);
     }}
   >
     {({

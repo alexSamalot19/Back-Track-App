@@ -12,6 +12,7 @@ const tagStyle = {
 
 const AddStudentForm = props => (
   <Formik
+    enableReinitialize
     initialValues={{ firstName: "", lastName: "", email: "", topics: [] }}
     validate={values => {
       const errors = {};
@@ -40,7 +41,7 @@ const AddStudentForm = props => (
 
       return errors;
     }}
-    onSubmit={(values, { setSubmitting }) => {
+    onSubmit={(values, { setSubmitting, resetForm }) => {
       API.saveStudent({
         first_name: values.firstName,
         last_name: values.lastName,
@@ -49,6 +50,10 @@ const AddStudentForm = props => (
       })
         .then(res => props.handleReload())
         .catch(err => console.log(err));
+
+      resetForm();
+
+      setSubmitting(false);
     }}
   >
     {({

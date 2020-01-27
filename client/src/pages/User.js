@@ -62,7 +62,8 @@ class User extends Component {
 
   handleTopicModal = event => {
     this.setState({
-      isAddTopicModalVisible: !this.state.isAddTopicModalVisible
+      isAddTopicModalVisible: !this.state.isAddTopicModalVisible,
+      showLeader: false
     });
   };
 
@@ -167,7 +168,9 @@ class User extends Component {
           <Row>
             <Col size="xs-12">
               <div className="upcoming-meetings">
-                <div className="current-time">{time}, 2020</div>
+                <div className="current-time">
+                  <h3>{time}, 2020</h3>
+                </div>
                 <div className="list-group">
                   {/* {this.state.isLoading && loadingState} */}
                   {showCalendar && events.length > 0 && eventsList}
