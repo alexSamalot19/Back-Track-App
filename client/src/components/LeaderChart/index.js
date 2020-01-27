@@ -50,9 +50,14 @@ class LeaderChart extends Component {
 
       function chartTheData(item, index) {
         if (item.name === barLabel) {
-          barLabels[i] = item.user;
-          barData[i] = item.hours;
-          i++;
+          if (barLabels.indexOf(item.user) == -1) {
+            barLabels[i] = item.user;
+            barData[i] = item.hours;
+            i++;
+          } else {
+            barData[barLabels.indexOf(item.user)] =
+              barData[barLabels.indexOf(item.user)] + item.hours;
+          }
         }
       }
 
