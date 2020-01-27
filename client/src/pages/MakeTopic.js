@@ -119,7 +119,25 @@ class MakeTopic extends Component {
       );
     }
 
-    return <h1>No Topic Found</h1>;
+    return (
+      <Container>
+        {" "}
+        <h1>No Topic Found</h1>{" "}
+        <Modal
+          title="Add new topic"
+          visible={isAddTopicModalVisible}
+          onOk={this.closeAddTopicModal}
+          onCancel={this.closeAddTopicModal}
+          width={1000}
+        >
+          <AddTopicForm handleReload={this.fetchTopics.bind(this)} />
+        </Modal>
+        <TopicFooter
+          handleAddTopicClickEvent={this.openAddTopicModal}
+          numberOfTopics={topics.length}
+        ></TopicFooter>
+      </Container>
+    );
   }
 }
 

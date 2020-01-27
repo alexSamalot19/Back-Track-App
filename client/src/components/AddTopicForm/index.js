@@ -12,40 +12,26 @@ const tagStyle = {
 
 const AddTopicForm = props => (
   <Formik
-    initialValues={{ firstName: "", lastName: "", email: "", topics: [] }}
+    initialValues={{ name: "", user: "", hours: "" }}
     validate={values => {
       const errors = {};
 
-      if (!values.firstName) {
-        errors.firstName = "First Name Required";
+      if (!values.name) {
+        errors.name = "Topic Name Required";
       }
-      if (!values.lastName) {
-        errors.lastName = "Last Name Required";
+      if (!values.user) {
+        errors.user = "User Name Required";
       }
-      if (!values.email) {
-        errors.email = "Email is Required";
+      if (!values.hours) {
+        errors.hours = "Hours are Required";
       }
-
-      if (!values.email) {
-        errors.email = "Email Required";
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      ) {
-        errors.email = "Invalid email address";
-      }
-
-      if (!values.topics) {
-        errors.topics = "Topics are Required";
-      }
-
-      return errors;
     }}
-    onSubmit={(values, { setSubmitting }) => {
-      API.saveStudent({
-        first_name: values.firstName,
-        last_name: values.lastName,
-        email: values.email,
-        topics: values.topics.split(" ")
+    onSubmit={(topic, { setSubmitting }) => {
+      alert(JSON.stringify(topic));
+      API.saveTopic({
+        name: topic.name,
+        user: topic.user,
+        hours: topic.hours
       })
         .then(res => props.handleReload())
         .catch(err => console.log(err));
@@ -66,48 +52,37 @@ const AddTopicForm = props => (
       <form onSubmit={handleSubmit}>
         <Input
           style={inputBottomMargin}
-          name="firstName"
+          name="name"
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.firstName}
-          placeholder="First Name. E.g. John"
+          value={values.name}
+          placeholder="Topic Name. E.g. Marathon"
         />
-        {errors.firstName && touched.firstName && (
-          <Tag style={tagStyle}>{errors.firstName}</Tag>
+        {errors.name && touched.name && (
+          <Tag style={tagStyle}>{errors.name}</Tag>
         )}
         <Input
           style={inputBottomMargin}
-          name="lastName"
+          name="user"
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.lastName}
-          placeholder="Last Name. E.g. Smith"
+          value={values.user}
+          placeholder="User Name. E.g. John Smith"
         />
         {errors.lastName && touched.lastName && (
           <Tag style={tagStyle}>{errors.lastName}</Tag>
         )}
         <Input
           style={inputBottomMargin}
-          name="email"
-          type="email"
+          name="hours"
+          type="hours"
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.email}
-          placeholder="email. E.g. john.smith@hotmail.com"
+          value={values.hours}
+          placeholder="hours E.g. 3.5"
         />
-        {errors.email && touched.email && (
+        {errors.hours && touched.hours && (
           <Tag style={tagStyle}>{errors.email}</Tag>
-        )}
-        <Input
-          style={inputBottomMargin}
-          name="topics"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.topics}
-          placeholder="Topics E.g. Marathon"
-        />
-        {errors.topics && touched.topics && (
-          <Tag style={tagStyle}>{errors.topics}</Tag>
         )}
         <Button
           onClick={() => submitForm()}

@@ -15,7 +15,7 @@ const TopicFooter = props => (
         </Avatar>
       ) : null}
       <Button onClick={() => props.handleAddTopicClickEvent()} type="primary">
-        Add new Student +
+        Add new Topic +
       </Button>
     </Container>
   </div>
