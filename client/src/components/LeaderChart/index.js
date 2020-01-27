@@ -43,7 +43,29 @@ class LeaderChart extends Component {
 
       let barChart = {
         labels: barLabels,
-        datasets: [{ label: barLabel, data: barData }]
+        datasets: [
+          {
+            label: barLabel,
+            data: barData,
+            backgroundColor: [
+              "#0074D9",
+              "#FF4136",
+              "#2ECC40",
+              "#FF851B",
+              "#7FDBFF",
+              "#B10DC9",
+              "#FFDC00",
+              "#001f3f",
+              "#39CCCC",
+              "#01FF70",
+              "#85144b",
+              "#F012BE",
+              "#3D9970",
+              "#111111",
+              "#AAAAAA"
+            ]
+          }
+        ]
       };
 
       topics.forEach(chartTheData);
@@ -63,7 +85,8 @@ class LeaderChart extends Component {
 
       return (
         <div className="chart">
-          <Bar data={barChart} options={{ maintainAspectRatio: false }} />
+          <h3>{barChart.datasets[0].label}</h3>
+          <Bar data={barChart} options={{ legend: { display: false } }} />
         </div>
       );
     } else {
