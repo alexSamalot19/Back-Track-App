@@ -15,7 +15,7 @@ class Nav extends Component {
           </Link>
           <Link to={"./MakeTopic"}>
             <Button type="dark" className="input-lg">
-              Edit Topics DB
+              Edit Topics
             </Button>
           </Link>
           <Link to={"./MakeStudent"}>
@@ -35,7 +35,7 @@ class Nav extends Component {
           </Link>
           <Link to={"../MakeTopic"}>
             <Button type="dark" className="input-lg">
-              Edit Topics DB
+              Edit Topics
             </Button>
           </Link>
           <Link to={"../MakeStudent"}>

@@ -1,7 +1,7 @@
 .jumbotron {
   background-image: url("/img/NavBkgd.gif");
   /* The image used */
-  color: mistyrose;
+  color: mistyrose !important;
   height: 600px;
   background-position: center;
   /* Center the image */
@@ -9,4 +9,6 @@
   /* Do not repeat the image */
   background-size: cover;
   /* Resize the background image to cover the entire container */
+
+  font-family: "Oswald", sans-serif;
 }

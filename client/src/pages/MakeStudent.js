@@ -88,11 +88,6 @@ class MakeStudent extends Component {
           title: "Email",
           dataIndex: "email",
           key: "email"
-        },
-        {
-          title: "Topics",
-          dataIndex: "topics",
-          key: "topics"
         }
       ];
 
