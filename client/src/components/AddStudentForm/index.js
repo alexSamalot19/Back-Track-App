@@ -109,7 +109,7 @@ const AddStudentForm = props => (
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.topics}
-          placeholder="Topics E.g. Marathon"
+          placeholder="Topics Separated by a Space E.g. Marathon Volunteer"
         />
         {errors.topics && touched.topics && (
           <Tag style={tagStyle}>{errors.topics}</Tag>
