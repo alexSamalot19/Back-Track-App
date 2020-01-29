@@ -49,4 +49,4 @@ Here they can see bar graphs of all of the topics they are signed up for with al
 My name is Alex I am a bootcamp student whose portfolio can be found
 [here](https://alexsamalot19.github.io/Samalot-Alexander-Portfolio/).
 
-I created React components, worked with helper/util functions, and utilized React lifecycle methods to query and display books based on user searches. Node, Express and MongoDB were used so that users can save books to review or purchase later. The site is deployed to Heroku [here](https://back-track.herokuapp.com/).
+I developed this app to collect data from the Google calendar API, store user information in the database and design an intuitive and stylish front end. The site is deployed to Heroku [here](https://back-track.herokuapp.com/).
