@@ -4,7 +4,7 @@
 
 ## Description
 
-Back Track is group activity tracker which uses the MERN Stack (MongoDB, Express, React, Node.js) to encourage competition with leaderboards for users who schedule the most hours in a particular topic.
+Back Track is group activity tracker which uses the MERN Stack (MongoDB, Express, React, Node.js) to encourage participation in shared activities. Back Track allows busy people to schedule and share events by streamlining the tradiational calendar interface. Back Track also displays leaderboards to reward users who schedule the most hours in a particular topic.
 
 <br>
 
@@ -14,17 +14,11 @@ The user begins at the home page:
 
 ![HomePage](client/public/img/HomePage.png)
 
-If there are events scheduled for the day they are displayed the list of users with a pie chart of how many total hours each member has logged.
-
-Adding a new user:
-
-![AddUserPage](client/public/img/AddUserPage.png)
-
-The nav bar at the top of the screen contains a button to make a new user. When the button is clicked the user is taken to the home page listed above. The footer at the bottom of the page contains a button to make a new user.
+If there are events scheduled for the day they are displayed below the date. There is also an index of users with links to their individual page on the home page. Next to the users a pie chart with the total hours each member has plotted. There is a nav bar at the top of the home page which contains a button to make a new user. When the button is clicked the user is taken to the students database page. There is a footer at the bottom of the page contains a button to make a new user. This will bring up the form below.
 
 ![AddUserForm](client/public/img/AddUserForm.png)
 
-When the information is filled out the user will appear on the page and is also available on the home page as well. They can click their name to go to their individual page shown below.
+When the information is filled out the user will appear on the students database page and the home page as well. They can click their name on the home page to go to their individual page shown below.
 
 ![UserPage](client/public/img/UserPage.png)
 
@@ -41,6 +35,14 @@ Here they can see bar graphs of all of the topics they are signed up for with al
 - [ReactJS](https://reactjs.org/)
 
 - [Node JS](https://nodejs.org/en/)
+
+- [Google Calendar API](https://developers.google.com/calendar/)
+
+- [formik](https://www.npmjs.com/package/formik)
+
+- [Ant Design](https://ant.design/)
+
+- [Bootstrap](https://getbootstrap.com/)
 
 <br>
 
