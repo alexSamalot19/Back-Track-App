@@ -2,12 +2,8 @@
 import React, { Component } from "react";
 import Jumbotron from "../components/Jumbotron";
 import Nav from "../components/Nav";
-import Input from "../components/Input";
-import Button from "../components/Button";
 import API from "../utils/API";
 import moment from "moment";
-import { RecipeList, RecipeListItem } from "../components/RecipeList";
-// import { EventList, EventListItem } from "./components/Calendar";
 import { Container, Row, Col } from "../components/Grid";
 import { GOOGLE_API_KEY, CALENDAR_ID } from "../config.js";
 import { Link } from "react-router-dom";
@@ -96,6 +92,7 @@ class Home extends Component {
           className="list-group-item"
           href={event.htmlLink}
           target="_blank"
+          rel="noopener noreferrer"
           key={event.id}
         >
           {event.summary}{" "}

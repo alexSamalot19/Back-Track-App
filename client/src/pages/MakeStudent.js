@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../App.css";
 import Container from "../components/Container";
 import StudentFooter from "../components/StudentFooter";
-import { Table, Avatar, Spin, Icon, Modal } from "antd";
+import { Table, Avatar, Spin, Modal } from "antd";
 import AddStudentForm from "../components/AddStudentForm";
 import API from "../utils/API";
 

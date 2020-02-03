@@ -2,17 +2,14 @@
 import React, { Component } from "react";
 import Jumbotron from "../components/Jumbotron";
 import Nav from "../components/Nav";
-import Input from "../components/Input";
 import Button from "../components/Button";
 import API from "../utils/API";
 import moment from "moment";
 import { Container, Row, Col } from "../components/Grid";
 import { GOOGLE_API_KEY, CALENDAR_ID } from "../config.js";
-import { Link } from "react-router-dom";
-import { List, ListItem } from "../components/List";
 import LeaderChart from "../components/LeaderChart";
 import UserTopicForm from "../components/UserTopicForm";
-import { Table, Avatar, Spin, Icon, Modal } from "antd";
+import { Modal } from "antd";
 
 class User extends Component {
   state = {
@@ -110,6 +107,7 @@ class User extends Component {
               className="list-group-item"
               href={event.htmlLink}
               target="_blank"
+              rel="noopener noreferrer"
               key={event.id}
             >
               {event.summary}{" "}
@@ -124,7 +122,9 @@ class User extends Component {
             </a>
           );
         }
+        return <div></div>;
       }
+      return <div></div>;
     });
 
     return (
@@ -172,9 +172,7 @@ class User extends Component {
                   <h3>{time}, 2020</h3>
                 </div>
                 <div className="list-group">
-                  {/* {this.state.isLoading && loadingState} */}
                   {showCalendar && events.length > 0 && eventsList}
-                  {/* {this.state.isEmpty && emptyState} */}
                 </div>
               </div>
             </Col>
@@ -183,8 +181,6 @@ class User extends Component {
             <ul>{showLeader && topicsList}</ul>
           </Row>
           <Row>
-            {/* <LeaderChart showState={showLeader} /> */}
-
             <Modal
               title={
                 this.state.student.first_name +
