@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../App.css";
 import Container from "../components/Container";
 import TopicFooter from "../components/TopicFooter";
-import { Table, Avatar, Spin, Icon, Modal } from "antd";
+import { Table, Avatar, Spin, Modal } from "antd";
 import AddTopicForm from "../components/AddTopicForm";
 import API from "../utils/API";
 

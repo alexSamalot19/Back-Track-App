@@ -8,7 +8,6 @@ router.use("/api", apiRoutes);
 // If no API routes are hit, send the React app
 router.use(function(req, res) {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
-  // /Users/alex/Documents/FullStack/ASSIGNMENTS FOR SUB/homework_20/ClassEx/client/public/index.html
 });
 
 module.exports = router;

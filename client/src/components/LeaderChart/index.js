@@ -1,17 +1,10 @@
 import React, { Component } from "react";
-import { Bar, Line, Pie } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import API from "../../utils/API";
-import Container from "../Container";
-import { Table, Avatar, Spin, Icon, Modal } from "antd";
 
 class LeaderChart extends Component {
   state = {
-    isFetchingData: false,
-    hasData: false,
-    chartData: {
-      labels: ["Boston", "Worcester", "Amherst"],
-      datasets: [{ label: "Population", data: [100, 200, 300] }]
-    }
+    hasData: false
   };
 
   componentDidMount() {
@@ -19,14 +12,10 @@ class LeaderChart extends Component {
   }
 
   fetchTopics = () => {
-    this.setState({
-      isFetchingData: true
-    });
     API.getTopic()
       .then(res =>
         this.setState({
           topics: res.data,
-          isFetchingData: false,
           hasData: true
         })
       )
@@ -34,7 +23,7 @@ class LeaderChart extends Component {
   };
 
   render() {
-    const { hasData, topics, isFetchingData, chartData } = this.state;
+    const { hasData, topics } = this.state;
     if (hasData && this.props.showState) {
       let barLabels = [];
       let barLabel = this.props.topicFilter;
@@ -72,7 +61,7 @@ class LeaderChart extends Component {
 
       function chartTheData(item, index) {
         if (item.name === barLabel) {
-          if (barLabels.indexOf(item.user) == -1) {
+          if (barLabels.indexOf(item.user) === -1) {
             barLabels[i] = item.user;
             barData[i] = item.hours;
             i++;

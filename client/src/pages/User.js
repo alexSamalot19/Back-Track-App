@@ -2,17 +2,14 @@
 import React, { Component } from "react";
 import Jumbotron from "../components/Jumbotron";
 import Nav from "../components/Nav";
-import Input from "../components/Input";
 import Button from "../components/Button";
 import API from "../utils/API";
 import moment from "moment";
 import { Container, Row, Col } from "../components/Grid";
 import { GOOGLE_API_KEY, CALENDAR_ID } from "../config.js";
-import { Link } from "react-router-dom";
-import { List, ListItem } from "../components/List";
 import LeaderChart from "../components/LeaderChart";
 import UserTopicForm from "../components/UserTopicForm";
-import { Table, Avatar, Spin, Icon, Modal } from "antd";
+import { Modal } from "antd";
 
 class User extends Component {
   state = {
@@ -83,6 +80,55 @@ class User extends Component {
     console.log(this.props.match.params.id);
   };
 
+  getEvents() {
+    let that = this;
+    function start() {
+      console.log(GOOGLE_API_KEY);
+
+      gapi.client
+        .init({
+          apiKey: GOOGLE_API_KEY
+        })
+        .then(function() {
+          return gapi.client.request({
+            path: `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?maxResults=11&orderBy=updated&timeMin=${moment().toISOString()}&timeMax=${moment()
+              .endOf("day")
+              .toISOString()}`
+          });
+        })
+        .then(
+          response => {
+            let events = response.result.items;
+            console.log(events);
+            console.log(response);
+            let sortedEvents = events.sort(function(a, b) {
+              return (
+                moment(b.start.dateTime).format("YYYYMMDD") -
+                moment(a.start.dateTime).format("YYYYMMDD")
+              );
+            });
+            if (events.length > 0) {
+              that.setState({
+                events: sortedEvents,
+                isLoading: false,
+                isEmpty: false
+              });
+            } else {
+              that.setState({
+                isBusy: false,
+                isEmpty: true,
+                isLoading: false
+              });
+            }
+          },
+          function(reason) {
+            console.log(reason);
+          }
+        );
+    }
+    gapi.load("client", start);
+  }
+
   render() {
     const {
       hasStudent,
@@ -110,6 +156,7 @@ class User extends Component {
               className="list-group-item"
               href={event.htmlLink}
               target="_blank"
+              rel="noopener noreferrer"
               key={event.id}
             >
               {event.summary}{" "}
@@ -124,7 +171,9 @@ class User extends Component {
             </a>
           );
         }
+        return <div></div>;
       }
+      return <div></div>;
     });
 
     return (
@@ -172,9 +221,7 @@ class User extends Component {
                   <h3>{time}, 2020</h3>
                 </div>
                 <div className="list-group">
-                  {/* {this.state.isLoading && loadingState} */}
                   {showCalendar && events.length > 0 && eventsList}
-                  {/* {this.state.isEmpty && emptyState} */}
                 </div>
               </div>
             </Col>
@@ -183,8 +230,6 @@ class User extends Component {
             <ul>{showLeader && topicsList}</ul>
           </Row>
           <Row>
-            {/* <LeaderChart showState={showLeader} /> */}
-
             <Modal
               title={
                 this.state.student.first_name +
@@ -214,61 +259,6 @@ class User extends Component {
         </Container>
       </div>
     );
-  }
-
-  getEvents() {
-    let that = this;
-    function start() {
-      console.log(GOOGLE_API_KEY);
-
-      gapi.client
-        .init({
-          apiKey: GOOGLE_API_KEY
-        })
-        .then(function() {
-          return gapi.client.request({
-            path: `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?maxResults=11&orderBy=updated&timeMin=${moment().toISOString()}&timeMax=${moment()
-              .endOf("day")
-              .toISOString()}`
-          });
-        })
-        .then(
-          response => {
-            let events = response.result.items;
-            console.log(events);
-            console.log(response);
-            let sortedEvents = events.sort(function(a, b) {
-              return (
-                moment(b.start.dateTime).format("YYYYMMDD") -
-                moment(a.start.dateTime).format("YYYYMMDD")
-              );
-            });
-            if (events.length > 0) {
-              that.setState(
-                {
-                  events: sortedEvents,
-                  isLoading: false,
-                  isEmpty: false
-                }
-                // ,
-                // () => {
-                //   that.setStatus();
-                // }
-              );
-            } else {
-              that.setState({
-                isBusy: false,
-                isEmpty: true,
-                isLoading: false
-              });
-            }
-          },
-          function(reason) {
-            console.log(reason);
-          }
-        );
-    }
-    gapi.load("client", start);
   }
 }
 

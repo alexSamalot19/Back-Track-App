@@ -1,17 +1,11 @@
 import React, { Component } from "react";
-import { Bar, Line, Pie } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 import API from "../../utils/API";
 
 class LeaderChart extends Component {
   state = {
     students: [],
-    topics: [],
-    isFetchingData: false,
-    hasData: false,
-    chartData: {
-      labels: ["Boston", "Worcester", "Amherst"],
-      datasets: [{ label: "Population", data: [100, 200, 300] }]
-    }
+    topics: []
   };
 
   componentDidMount() {
@@ -20,15 +14,10 @@ class LeaderChart extends Component {
   }
 
   fetchTopics = () => {
-    this.setState({
-      isFetchingData: true
-    });
     API.getTopic()
       .then(res =>
         this.setState({
-          topics: res.data,
-          isFetchingData: false,
-          hasData: true
+          topics: res.data
         })
       )
       .catch(err => console.log(err));
@@ -49,11 +38,8 @@ class LeaderChart extends Component {
   };
 
   render() {
-    const { students, hasData, topics, isFetchingData, chartData } = this.state;
+    const { students, topics } = this.state;
 
-    let barLabel = "Top Contributors";
-    let barData = [];
-    let i = 0;
     let pieLabels = [];
     let pieData = [];
     let topicUser = "";

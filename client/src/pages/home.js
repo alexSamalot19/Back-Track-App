@@ -2,12 +2,8 @@
 import React, { Component } from "react";
 import Jumbotron from "../components/Jumbotron";
 import Nav from "../components/Nav";
-import Input from "../components/Input";
-import Button from "../components/Button";
 import API from "../utils/API";
 import moment from "moment";
-import { RecipeList, RecipeListItem } from "../components/RecipeList";
-// import { EventList, EventListItem } from "./components/Calendar";
 import { Container, Row, Col } from "../components/Grid";
 import { GOOGLE_API_KEY, CALENDAR_ID } from "../config.js";
 import { Link } from "react-router-dom";
@@ -16,9 +12,7 @@ import LeaderPieChart from "../components/LeaderPieChart";
 
 class Home extends Component {
   state = {
-    weather: [],
     students: [],
-    recipeSearch: "",
     time: moment().format("dd, Do MMMM, h:mm A"),
     events: [],
     isBusy: false,
@@ -44,17 +38,6 @@ class Home extends Component {
     this.getEvents();
   };
 
-  handleFormSubmit = event => {
-    // When the form is submitted, prevent its default behavior, get recipes update the recipes state
-    event.preventDefault();
-    API.getRecipes(this.state.recipeSearch)
-      .then(res => {
-        this.setState({ recipes: res.data });
-        console.log(res);
-      })
-      .catch(err => console.log(err));
-  };
-
   fetchStudents = () => {
     this.setState({
       isFetching: false
@@ -68,99 +51,6 @@ class Home extends Component {
       )
       .catch(err => console.log(err));
   };
-
-  handleWeatherSubmit = event => {
-    // When the form is submitted, prevent its default behavior, get recipes update the recipes state
-    event.preventDefault();
-    API.getWeather()
-      .then(res => {
-        this.setState({ weather: res.data });
-        console.log("I tried");
-        console.log(res);
-      })
-      .catch(err => console.log(err));
-    console.log("new");
-    console.log(this.state.weather);
-
-    this.setState({ weather: "sun" });
-
-    console.log("cheating");
-  };
-
-  render() {
-    const { time, events } = this.state;
-
-    let eventsList = events.map(function(event) {
-      return (
-        <a
-          className="list-group-item"
-          href={event.htmlLink}
-          target="_blank"
-          key={event.id}
-        >
-          {event.summary}{" "}
-          <span className="badge">
-            {moment(event.start.dateTime).format("h:mm a")},{" "}
-            {moment(event.end.dateTime).diff(
-              moment(event.start.dateTime),
-              "minutes"
-            )}{" "}
-            minutes, {moment(event.start.dateTime).format("MMMM Do")}{" "}
-          </span>
-        </a>
-      );
-    });
-
-    return (
-      <div>
-        <Nav page={"home"} type="dark" />
-        <Jumbotron />
-        <Container>
-          <Row>
-            <Col size="xs-12">
-              <div className="upcoming-meetings">
-                <div className="current-time">
-                  <h3>{time}, 2020</h3>
-                </div>
-                <div className="list-group">
-                  {/* {this.state.isLoading && loadingState} */}
-                  {events.length > 0 && eventsList}
-                  {/* {this.state.isEmpty && emptyState} */}
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-
-        <Container>
-          <h3>Users</h3>
-          <Row>
-            <Col size="xs-12">
-              {this.state.students.length ? (
-                <List>
-                  {this.state.students.map(students => (
-                    <ListItem key={students._id}>
-                      <Link to={"/students/" + students._id} id={students._id}>
-                        <strong>
-                          {students.first_name} {students.last_name}
-                        </strong>
-                      </Link>
-                      {/* <DeleteBtn onClick={() => this.deleteBook(students._id)} /> */}
-                    </ListItem>
-                  ))}
-                </List>
-              ) : (
-                <h3>No Ones Home!</h3>
-              )}
-            </Col>
-            <Col size="xs-12">
-              <LeaderPieChart />
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    );
-  }
 
   getEvents() {
     let that = this;
@@ -190,17 +80,11 @@ class Home extends Component {
               );
             });
             if (events.length > 0) {
-              that.setState(
-                {
-                  events: sortedEvents,
-                  isLoading: false,
-                  isEmpty: false
-                }
-                // ,
-                // () => {
-                //   that.setStatus();
-                // }
-              );
+              that.setState({
+                events: sortedEvents,
+                isLoading: false,
+                isEmpty: false
+              });
             } else {
               that.setState({
                 isBusy: false,
@@ -215,6 +99,79 @@ class Home extends Component {
         );
     }
     gapi.load("client", start);
+  }
+
+  render() {
+    const { time, events } = this.state;
+
+    let eventsList = events.map(function(event) {
+      return (
+        <a
+          className="list-group-item"
+          href={event.htmlLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          key={event.id}
+        >
+          {event.summary}{" "}
+          <span className="badge">
+            {moment(event.start.dateTime).format("h:mm a")},{" "}
+            {moment(event.end.dateTime).diff(
+              moment(event.start.dateTime),
+              "minutes"
+            )}{" "}
+            minutes, {moment(event.start.dateTime).format("MMMM Do")}{" "}
+          </span>
+        </a>
+      );
+    });
+
+    return (
+      <div>
+        <Nav page={"home"} type="dark" />
+        <Jumbotron />
+        <Container>
+          <Row>
+            <Col size="xs-12">
+              <div className="upcoming-meetings">
+                <div className="current-time">
+                  <h3>{time}, 2020</h3>
+                </div>
+                <div className="list-group">
+                  {events.length > 0 && eventsList}
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+
+        <Container>
+          <h3>Users</h3>
+          <Row>
+            <Col size="xs-12">
+              {this.state.students.length ? (
+                <List>
+                  {this.state.students.map(students => (
+                    <ListItem key={students._id}>
+                      <Link to={"/students/" + students._id} id={students._id}>
+                        <strong>
+                          {students.first_name} {students.last_name}
+                        </strong>
+                      </Link>
+                    </ListItem>
+                  ))}
+                </List>
+              ) : (
+                <h3>No Ones Home!</h3>
+              )}
+            </Col>
+            <Col size="xs-12">
+              <LeaderPieChart />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
   }
 }
 
