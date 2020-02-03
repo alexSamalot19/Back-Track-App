@@ -1,6 +1,6 @@
 const db = require("../models");
 
-// Defining methods for the topic Controller
+// Defining methods for topic Controller
 module.exports = {
   findAll: function(req, res) {
     db.Topic.find(req.query)

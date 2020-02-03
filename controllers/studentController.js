@@ -1,6 +1,6 @@
 const db = require("../models");
 
-// Defining methods for the studentController
+// Defining methods for studentController
 module.exports = {
   findAll: function(req, res) {
     db.Student.find(req.query)
